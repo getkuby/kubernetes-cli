@@ -1,6 +1,20 @@
 require 'kubectl-rb'
 
 class KubernetesCLI
+  class KubernetesError < StandardError; end
+
+  class InvalidResourceError < KubernetesError
+    attr_accessor :resource
+  end
+
+  class InvalidResourceUriError < KubernetesError
+    attr_accessor :resource_uri
+  end
+
+  class GetResourceError < KubernetesError; end
+
+  STATUS_KEY = :kubernetes_cli_last_status
+
   attr_reader :kubeconfig_path, :executable
 
   def initialize(kubeconfig_path, executable = KubectlRb.executable)
@@ -19,7 +33,7 @@ class KubernetesCLI
   end
 
   def last_status
-    Thread.current[status_key]
+    Thread.current[STATUS_KEY]
   end
 
   def run_cmd(cmd)
@@ -127,7 +141,7 @@ class KubernetesCLI
     systemm(cmd)
 
     unless last_status.success?
-      raise KubernetesCLIError, "could not annotate resource '#{name}': kubectl "\
+      raise KubernetesError, "could not annotate resource '#{name}': kubectl "\
         "exited with status code #{last_status.exitstatus}"
     end
   end
@@ -151,19 +165,8 @@ class KubernetesCLI
     @env ||= {}
   end
 
-  def status_key
-    :kubernetes_cli_last_status
-  end
-
   def base_cmd
     [executable, '--kubeconfig', kubeconfig_path]
-  end
-
-  def backticks(cmd)
-    cmd_s = cmd.join(' ')
-    `#{cmd_s}`.tap do
-      self.last_status = $?
-    end
   end
 
   def execc(cmd)
@@ -212,6 +215,6 @@ class KubernetesCLI
   end
 
   def last_status=(status)
-    Thread.current[status_key] = status
+    Thread.current[STATUS_KEY] = status
   end
 end
