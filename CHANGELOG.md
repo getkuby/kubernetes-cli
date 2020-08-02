@@ -1,3 +1,6 @@
+## 0.2.1
+* Add missing `require` for open3.
+
 ## 0.2.0
 * Remove doubly-defined method KubernetesCLI#backticks.
 * Move `status_key` into a constant.

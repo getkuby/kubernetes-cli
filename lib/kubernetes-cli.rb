@@ -1,4 +1,5 @@
 require 'kubectl-rb'
+require 'open3'
 
 class KubernetesCLI
   class KubernetesError < StandardError; end
