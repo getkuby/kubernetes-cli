@@ -1,5 +1,6 @@
 require 'kubectl-rb'
 require 'open3'
+require 'stringio'
 
 class KubernetesCLI
   class KubernetesError < StandardError; end
@@ -15,6 +16,8 @@ class KubernetesCLI
   class GetResourceError < KubernetesError; end
 
   STATUS_KEY = :kubernetes_cli_last_status
+  STDOUT_KEY = :kubernetes_cli_stdout
+  STDERR_KEY = :kubernetes_cli_stderr
 
   attr_reader :kubeconfig_path, :executable
 
@@ -49,12 +52,19 @@ class KubernetesCLI
     execc(cmd)
   end
 
+  def system_cmd(container_cmd, namespace, pod, tty = true)
+    cmd = [executable, '--kubeconfig', kubeconfig_path, '-n', namespace, 'exec']
+    cmd += ['-it'] if tty
+    cmd += [pod, '--', *Array(container_cmd)]
+    systemm(cmd)
+  end
+
   def apply(res, dry_run: false)
     cmd = [executable, '--kubeconfig', kubeconfig_path, 'apply', '--validate']
     cmd << '--dry-run=client' if dry_run
     cmd += ['-f', '-']
 
-    open3_w(env, cmd) do |stdin, _wait_thread|
+    open3_w(env, cmd) do |stdin|
       stdin.puts(res.to_resource.to_yaml)
     end
 
@@ -160,6 +170,61 @@ class KubernetesCLI
     backticks(cmd).strip
   end
 
+  def api_resources
+    cmd = [executable, '--kubeconfig', kubeconfig_path, 'api-resources']
+    result = backticks(cmd)
+
+    unless last_status.success?
+      raise KubernetesError, 'could not fetch API resources: kubectl exited with '\
+        "status code #{last_status.exitstatus}. #{result}"
+    end
+
+    result
+  end
+
+  def restart_deployment(namespace, deployment)
+    cmd = [
+      executable,
+      '--kubeconfig', kubeconfig_path,
+      '-n', namespace,
+      'rollout', 'restart', 'deployment', deployment
+    ]
+
+    systemm(cmd)
+
+    unless last_status.success?
+      raise KubernetesError, 'could not restart deployment: kubectl exited with '\
+        "status code #{last_status.exitstatus}"
+    end
+  end
+
+  def with_pipes(out = STDOUT, err = STDERR)
+    previous_stdout = self.stdout
+    previous_stderr = self.stderr
+    self.stdout = out
+    self.stderr = err
+    yield
+  ensure
+    self.stdout = previous_stdout
+    self.stderr = previous_stderr
+  end
+
+  def stdout
+    Thread.current[STDOUT_KEY] || STDOUT
+  end
+
+  def stdout=(new_stdout)
+    Thread.current[STDOUT_KEY] = new_stdout
+  end
+
+  def stderr
+    Thread.current[STDERR_KEY] || STDERR
+  end
+
+  def stderr=(new_stderr)
+    Thread.current[STDERR_KEY] = new_stderr
+  end
+
   private
 
   def env
@@ -179,30 +244,82 @@ class KubernetesCLI
   def systemm(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
-    system(cmd_s).tap do
-      self.last_status = $?
+
+    Open3.popen3(cmd_s) do |p_stdin, p_stdout, p_stderr, wait_thread|
+      Thread.new(stdout) do |t_stdout|
+        begin
+          p_stdout.each { |line| t_stdout.puts(line) }
+        rescue IOError
+        end
+      end
+
+      Thread.new(stderr) do |t_stderr|
+        begin
+          p_stderr.each { |line| t_stderr.puts(line) }
+        rescue IOError
+        end
+      end
+
+      p_stdin.close
+      self.last_status = wait_thread.value
       run_after_callbacks(cmd)
+      wait_thread.join
     end
   end
 
   def backticks(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
-    `#{cmd_s}`.tap do
-      self.last_status = $?
+    result = StringIO.new
+
+    Open3.popen3(cmd_s) do |p_stdin, p_stdout, p_stderr, wait_thread|
+      Thread.new do
+        begin
+          p_stdout.each { |line| result.puts(line) }
+        rescue IOError
+        end
+      end
+
+      Thread.new(stderr) do |t_stderr|
+        begin
+          p_stderr.each { |line| t_stderr.puts(line) }
+        rescue IOError
+        end
+      end
+
+      p_stdin.close
+      self.last_status = wait_thread.value
       run_after_callbacks(cmd)
+      wait_thread.join
     end
+
+    result.string
   end
 
   def open3_w(env, cmd, opts = {}, &block)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
 
-    Open3.pipeline_w([env, cmd_s], opts) do |stdin, wait_threads|
-      yield(stdin, wait_threads).tap do
-        stdin.close
-        self.last_status = wait_threads.last.value
+    Open3.popen3(env, cmd_s, opts) do |p_stdin, p_stdout, p_stderr, wait_thread|
+      Thread.new(stdout) do |t_stdout|
+        begin
+          p_stdout.each { |line| t_stdout.puts(line) }
+        rescue IOError
+        end
+      end
+
+      Thread.new(stderr) do |t_stderr|
+        begin
+          p_stderr.each { |line| t_stderr.puts(line) }
+        rescue IOError
+        end
+      end
+
+      yield(p_stdin).tap do
+        p_stdin.close
+        self.last_status = wait_thread.value
         run_after_callbacks(cmd)
+        wait_thread.join
       end
     end
   end

@@ -1,3 +1,6 @@
+## 0.3.0
+* Add ability to redirect kubectl's stdout and stderr streams.
+
 ## 0.2.1
 * Add missing `require` for open3.
 
