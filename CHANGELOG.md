@@ -1,3 +1,6 @@
+## 0.3.1
+* Fix issue restricting Docker CLI output.
+
 ## 0.3.0
 * Add ability to redirect kubectl's stdout and stderr streams.
 

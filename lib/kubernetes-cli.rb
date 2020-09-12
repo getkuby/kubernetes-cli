@@ -242,6 +242,23 @@ class KubernetesCLI
   end
 
   def systemm(cmd)
+    if stdout == STDOUT && stderr == STDERR
+      systemm_default(cmd)
+    else
+      systemm_open3(cmd)
+    end
+  end
+
+  def systemm_default(cmd)
+    run_before_callbacks(cmd)
+    cmd_s = cmd.join(' ')
+    system(cmd_s).tap do
+      self.last_status = $?
+      run_after_callbacks(cmd)
+    end
+  end
+
+  def systemm_open3(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
 
@@ -268,6 +285,23 @@ class KubernetesCLI
   end
 
   def backticks(cmd)
+    if stdout == STDOUT && stderr == STDERR
+      backticks_default(cmd)
+    else
+      backticks_open3(cmd)
+    end
+  end
+
+  def backticks_default(cmd)
+    run_before_callbacks(cmd)
+    cmd_s = cmd.join(' ')
+    `#{cmd_s}`.tap do
+      self.last_status = $?
+      run_after_callbacks(cmd)
+    end
+  end
+
+  def backticks_open3(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
     result = StringIO.new
