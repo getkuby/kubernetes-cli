@@ -1,6 +1,7 @@
 require 'kubectl-rb'
 require 'open3'
 require 'stringio'
+require 'json'
 
 class KubernetesCLI
   class KubernetesError < StandardError; end

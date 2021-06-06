@@ -1,3 +1,6 @@
+## 0.3.2
+* Add missing require statement.
+
 ## 0.3.1
 * Fix issue restricting Docker CLI output.
 
