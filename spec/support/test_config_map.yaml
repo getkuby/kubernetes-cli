@@ -1,0 +1,6 @@
+kind: ConfigMap
+metadata:
+  namespace: 'test'
+  name: 'test-config-external'
+data:
+  key: external value
