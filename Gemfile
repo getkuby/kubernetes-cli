@@ -6,10 +6,17 @@ gemspec
 # See: https://github.com/rubygems/rubygems/issues/3646
 gem 'kubectl-rb'
 
-group :development do
-  gem 'rake'
-end
-
 group :test do
   gem 'rspec'
+  gem 'kind-rb', '~> 0.1'
+  gem 'kube-dsl', '~> 0.6'
+end
+
+group :development, :test do
+  gem 'pry-byebug'
+  gem 'rake'
+
+  # lock to same version as kuby-core
+  gem 'sorbet', '= 0.5.6433'
+  gem 'parlour', '~> 6.0'
 end

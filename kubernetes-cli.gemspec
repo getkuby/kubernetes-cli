@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.description = s.summary = 'Ruby wrapper around the Kubernetes CLI.'
 
   s.add_dependency 'kubectl-rb', '~> 0.1'
+  s.add_dependency 'sorbet-runtime-stub', '~> 0.2'
 
   s.require_path = 'lib'
   s.files = Dir['{lib,spec,vendor}/**/*', 'Gemfile', 'LICENSE', 'CHANGELOG.md', 'README.md', 'Rakefile', 'kubernetes-cli.gemspec']
