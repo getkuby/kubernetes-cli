@@ -1,5 +1,16 @@
 # typed: strict
 
+# Necessary to require these here because runtime-stub is deprecated
+# and tries to declare runtime as a gem depdendency. In some envs,
+# runtime isn't a part of the bundle, but in other envs it is b/c
+# of the Parlour gem.
+require 'sorbet-runtime-stub'
+
+begin
+  require 'sorbet-runtime'
+rescue LoadError
+end
+
 require 'json'
 require 'kubectl-rb'
 require 'open3'
