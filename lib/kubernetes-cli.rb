@@ -395,7 +395,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(out: IO, err: IO, block: T.proc.void).void }
+  sig { params(out: T.any(StringIO, IO), err: T.any(StringIO, IO), block: T.proc.void).void }
   def with_pipes(out = STDOUT, err = STDERR, &block)
     previous_stdout = self.stdout
     previous_stderr = self.stderr

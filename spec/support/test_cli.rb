@@ -1,4 +1,6 @@
-# typed: true
+# typed: ignore
+
+require 'kubectl-rb'
 require 'kubernetes-cli'
 require 'stringio'
 
@@ -17,7 +19,7 @@ end
 class TestCLI < KubernetesCLI
   attr_reader :exec_commands, :system_commands
 
-  def initialize(*args, **kwargs, &block)
+  def initialize(kubeconfig_path, executable = KubectlRb.executable)
     @exec_commands = []
     @system_commands = []
 
