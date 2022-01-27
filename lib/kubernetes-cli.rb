@@ -407,22 +407,22 @@ class KubernetesCLI
     self.stderr = previous_stderr
   end
 
-  sig { returns(IO) }
+  sig { returns(T.any(StringIO, IO)) }
   def stdout
     Thread.current[STDOUT_KEY] || STDOUT
   end
 
-  sig { params(new_stdout: T.nilable(IO)).void }
+  sig { params(new_stdout: T.nilable(T.any(StringIO, IO))).void }
   def stdout=(new_stdout)
     Thread.current[STDOUT_KEY] = new_stdout
   end
 
-  sig { returns(IO) }
+  sig { returns(T.any(StringIO, IO)) }
   def stderr
     Thread.current[STDERR_KEY] || STDERR
   end
 
-  sig { params(new_stderr: T.nilable(IO)).void }
+  sig { params(new_stderr: T.nilable(T.any(StringIO, IO))).void }
   def stderr=(new_stderr)
     Thread.current[STDERR_KEY] = new_stderr
   end
