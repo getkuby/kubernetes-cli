@@ -12,11 +12,13 @@ group :test do
   gem 'kube-dsl', '~> 0.6'
 end
 
-group :development, :test do
-  gem 'pry-byebug'
-  gem 'rake'
-
+group :development do
   # lock to same version as kuby-core
   gem 'sorbet', '= 0.5.6433'
   gem 'parlour', '~> 6.0'
+end
+
+group :development, :test do
+  gem 'pry-byebug'
+  gem 'rake'
 end
