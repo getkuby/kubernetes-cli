@@ -150,19 +150,19 @@ class KubernetesCLI
   sig { params(namespace: String, deployment: String).void }
   def restart_deployment(namespace, deployment); end
 
-  sig { params(out: IO, err: IO, block: T.proc.void).void }
+  sig { params(out: T.any(StringIO, IO), err: T.any(StringIO, IO), block: T.proc.void).void }
   def with_pipes(out = STDOUT, err = STDERR, &block); end
 
-  sig { returns(IO) }
+  sig { returns(T.any(StringIO, IO)) }
   def stdout; end
 
-  sig { params(new_stdout: T.nilable(IO)).void }
+  sig { params(new_stdout: T.nilable(T.any(StringIO, IO))).void }
   def stdout=(new_stdout); end
 
-  sig { returns(IO) }
+  sig { returns(T.any(StringIO, IO)) }
   def stderr; end
 
-  sig { params(new_stderr: T.nilable(IO)).void }
+  sig { params(new_stderr: T.nilable(T.any(StringIO, IO))).void }
   def stderr=(new_stderr); end
 
   sig { returns(T::Hash[String, String]) }
