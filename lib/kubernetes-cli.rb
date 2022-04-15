@@ -59,6 +59,7 @@ class KubernetesCLI
   class DeleteResourceError < KubernetesError; end
   class PatchResourceError < KubernetesError; end
   class AnnotateResourceError < KubernetesError; end
+  class GetVersionError < KubernetesError; end
 
   STATUS_KEY = :kubernetes_cli_last_status
   STDOUT_KEY = :kubernetes_cli_stdout
@@ -109,6 +110,19 @@ class KubernetesCLI
     with_last_status do |ls|
       block.call(ls) unless ls.success?
     end
+  end
+
+  sig { returns(T::Hash[T.untyped, T.untyped]) }
+  def version
+    cmd = [executable, '--kubeconfig', kubeconfig_path, 'version', '-o', 'json']
+    result = backticks(cmd)
+
+    on_last_status_failure do |last_status|
+      raise GetVersionError, "couldn't get version info: "\
+        "kubectl exited with status code #{last_status.exitstatus}"
+    end
+
+    JSON.parse(result)
   end
 
   sig { params(cmd: T.any(String, T::Array[String])).void }
