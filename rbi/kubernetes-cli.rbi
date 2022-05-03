@@ -48,6 +48,9 @@ class KubernetesCLI
   class AnnotateResourceError < KubernetesError
   end
 
+  class GetVersionError < KubernetesError
+  end
+
   sig { returns(String) }
   attr_reader :kubeconfig_path
 
@@ -71,6 +74,9 @@ class KubernetesCLI
 
   sig { params(block: T.proc.params(last_status: Process::Status).void).void }
   def on_last_status_failure(&block); end
+
+  sig { returns(T::Hash[T.untyped, T.untyped]) }
+  def version; end
 
   sig { params(cmd: T.any(String, T::Array[String])).void }
   def run_cmd(cmd); end

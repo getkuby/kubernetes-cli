@@ -26,13 +26,13 @@ class KubernetesCLI
   class InvalidResourceError < KubernetesError
     extend T::Sig
 
-    sig { returns(T.nilable(::KubeDSL::DSLObject)) }
+    T::Sig::WithoutRuntime.sig { returns(T.nilable(::KubeDSL::DSLObject)) }
     attr_reader :resource
 
-    sig { params(resource: ::KubeDSL::DSLObject).returns(::KubeDSL::DSLObject) }
+    T::Sig::WithoutRuntime.sig { params(resource: ::KubeDSL::DSLObject).returns(::KubeDSL::DSLObject) }
     attr_writer :resource
 
-    sig { params(args: T.untyped).void }
+    T::Sig::WithoutRuntime.sig { params(args: T.untyped).void }
     def initialize(*args)
       @resource = T.let(@resource, T.nilable(::KubeDSL::DSLObject))
       super
@@ -42,13 +42,13 @@ class KubernetesCLI
   class InvalidResourceUriError < KubernetesError
     extend T::Sig
 
-    sig { returns(T.nilable(String)) }
+    T::Sig::WithoutRuntime.sig { returns(T.nilable(String)) }
     attr_reader :resource_uri
 
-    sig { params(resource_uri: String).returns(String) }
+    T::Sig::WithoutRuntime.sig { params(resource_uri: String).returns(String) }
     attr_writer :resource_uri
 
-    sig { params(args: T.untyped).void }
+    T::Sig::WithoutRuntime.sig { params(args: T.untyped).void }
     def initialize(*args)
       @resource_uri = T.let(@resource_uri, T.nilable(String))
       super
@@ -65,10 +65,10 @@ class KubernetesCLI
   STDOUT_KEY = :kubernetes_cli_stdout
   STDERR_KEY = :kubernetes_cli_stderr
 
-  sig { returns(String) }
+  T::Sig::WithoutRuntime.sig { returns(String) }
   attr_reader :kubeconfig_path
 
-  sig { returns(String) }
+  T::Sig::WithoutRuntime.sig { returns(String) }
   attr_reader :executable
 
   BeforeCallback = T.type_alias { T.proc.params(cmd: T::Array[String]).void }
@@ -76,7 +76,7 @@ class KubernetesCLI
     T.proc.params(cmd: T::Array[String], last_status: Process::Status).void
   end
 
-  sig { params(kubeconfig_path: String, executable: String).void }
+  T::Sig::WithoutRuntime.sig { params(kubeconfig_path: String, executable: String).void }
   def initialize(kubeconfig_path, executable = KubectlRb.executable)
     @kubeconfig_path = kubeconfig_path
     @executable = executable
@@ -85,34 +85,34 @@ class KubernetesCLI
     @env = T.let(@env, T.nilable(T::Hash[String, String]))
   end
 
-  sig { params(block: BeforeCallback).void }
+  T::Sig::WithoutRuntime.sig { params(block: BeforeCallback).void }
   def before_execute(&block)
     @before_execute << block
   end
 
-  sig { params(block: AfterCallback).void }
+  T::Sig::WithoutRuntime.sig { params(block: AfterCallback).void }
   def after_execute(&block)
     @after_execute << block
   end
 
-  sig { returns(T.nilable(Process::Status)) }
+  T::Sig::WithoutRuntime.sig { returns(T.nilable(Process::Status)) }
   def last_status
     Thread.current[STATUS_KEY]
   end
 
-  sig { params(block: T.proc.params(last_status: Process::Status).void).void }
+  T::Sig::WithoutRuntime.sig { params(block: T.proc.params(last_status: Process::Status).void).void }
   def with_last_status(&block)
     block.call(T.must(last_status))
   end
 
-  sig { params(block: T.proc.params(last_status: Process::Status).void).void }
+  T::Sig::WithoutRuntime.sig { params(block: T.proc.params(last_status: Process::Status).void).void }
   def on_last_status_failure(&block)
     with_last_status do |ls|
       block.call(ls) unless ls.success?
     end
   end
 
-  sig { returns(T::Hash[T.untyped, T.untyped]) }
+  T::Sig::WithoutRuntime.sig { returns(T::Hash[T.untyped, T.untyped]) }
   def version
     cmd = [executable, '--kubeconfig', kubeconfig_path, 'version', '-o', 'json']
     result = backticks(cmd)
@@ -125,13 +125,13 @@ class KubernetesCLI
     JSON.parse(result)
   end
 
-  sig { params(cmd: T.any(String, T::Array[String])).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T.any(String, T::Array[String])).void }
   def run_cmd(cmd)
     cmd = [executable, '--kubeconfig', kubeconfig_path, *Array(cmd)]
     execc(cmd)
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       container_cmd: T.any(String, T::Array[String]),
       namespace: String,
@@ -150,7 +150,7 @@ class KubernetesCLI
     execc(cmd)
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       container_cmd: T.any(String, T::Array[String]),
       namespace: String,
@@ -167,7 +167,7 @@ class KubernetesCLI
     systemm(cmd)
   end
 
-  sig { params(res: ::KubeDSL::DSLObject, dry_run: T::Boolean).void }
+  T::Sig::WithoutRuntime.sig { params(res: ::KubeDSL::DSLObject, dry_run: T::Boolean).void }
   def apply(res, dry_run: false)
     cmd = [executable, '--kubeconfig', kubeconfig_path, 'apply', '--validate']
     cmd << '--dry-run=client' if dry_run
@@ -187,7 +187,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(uri: String, dry_run: T::Boolean).void }
+  T::Sig::WithoutRuntime.sig { params(uri: String, dry_run: T::Boolean).void }
   def apply_uri(uri, dry_run: false)
     cmd = [executable, '--kubeconfig', kubeconfig_path, 'apply', '--validate']
     cmd << '--dry-run=client' if dry_run
@@ -204,7 +204,7 @@ class KubernetesCLI
     end
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       type: String,
       namespace: String,
@@ -229,7 +229,7 @@ class KubernetesCLI
     JSON.parse(result)
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       type: String,
       namespace: T.any(String, Symbol),
@@ -263,7 +263,7 @@ class KubernetesCLI
     JSON.parse(result)['items']
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       type: String,
       namespace: String,
@@ -283,7 +283,7 @@ class KubernetesCLI
     end
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       type: String,
       namespace: T.any(String, Symbol),
@@ -313,7 +313,7 @@ class KubernetesCLI
     end
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       type: String,
       namespace: String,
@@ -337,7 +337,7 @@ class KubernetesCLI
     end
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       type: String,
       namespace: String,
@@ -369,7 +369,7 @@ class KubernetesCLI
     end
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       namespace: String,
       selector: T::Hash[String, String],
@@ -384,13 +384,13 @@ class KubernetesCLI
     execc(cmd)
   end
 
-  sig { returns(String) }
+  T::Sig::WithoutRuntime.sig { returns(String) }
   def current_context
     cmd = [executable, '--kubeconfig', kubeconfig_path, 'config', 'current-context']
     backticks(cmd).strip
   end
 
-  sig { returns(String) }
+  T::Sig::WithoutRuntime.sig { returns(String) }
   def api_resources
     cmd = [executable, '--kubeconfig', kubeconfig_path, 'api-resources']
     result = backticks(cmd)
@@ -403,7 +403,7 @@ class KubernetesCLI
     result
   end
 
-  sig { params(namespace: String, deployment: String).void }
+  T::Sig::WithoutRuntime.sig { params(namespace: String, deployment: String).void }
   def restart_deployment(namespace, deployment)
     cmd = [
       executable,
@@ -420,7 +420,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(out: T.any(StringIO, IO), err: T.any(StringIO, IO), block: T.proc.void).void }
+  T::Sig::WithoutRuntime.sig { params(out: T.any(StringIO, IO), err: T.any(StringIO, IO), block: T.proc.void).void }
   def with_pipes(out = STDOUT, err = STDERR, &block)
     previous_stdout = self.stdout
     previous_stderr = self.stderr
@@ -432,46 +432,46 @@ class KubernetesCLI
     self.stderr = previous_stderr
   end
 
-  sig { returns(T.any(StringIO, IO)) }
+  T::Sig::WithoutRuntime.sig { returns(T.any(StringIO, IO)) }
   def stdout
     Thread.current[STDOUT_KEY] || STDOUT
   end
 
-  sig { params(new_stdout: T.nilable(T.any(StringIO, IO))).void }
+  T::Sig::WithoutRuntime.sig { params(new_stdout: T.nilable(T.any(StringIO, IO))).void }
   def stdout=(new_stdout)
     Thread.current[STDOUT_KEY] = new_stdout
   end
 
-  sig { returns(T.any(StringIO, IO)) }
+  T::Sig::WithoutRuntime.sig { returns(T.any(StringIO, IO)) }
   def stderr
     Thread.current[STDERR_KEY] || STDERR
   end
 
-  sig { params(new_stderr: T.nilable(T.any(StringIO, IO))).void }
+  T::Sig::WithoutRuntime.sig { params(new_stderr: T.nilable(T.any(StringIO, IO))).void }
   def stderr=(new_stderr)
     Thread.current[STDERR_KEY] = new_stderr
   end
 
   private
 
-  sig { returns(T::Hash[String, String]) }
+  T::Sig::WithoutRuntime.sig { returns(T::Hash[String, String]) }
   def env
     @env ||= {}
   end
 
-  sig { returns(T::Array[String]) }
+  T::Sig::WithoutRuntime.sig { returns(T::Array[String]) }
   def base_cmd
     [executable, '--kubeconfig', kubeconfig_path]
   end
 
-  sig { params(cmd: T::Array[String]).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
   def execc(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
     exec(cmd_s)
   end
 
-  sig { params(cmd: T::Array[String]).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
   def systemm(cmd)
     if stdout == STDOUT && stderr == STDERR
       systemm_default(cmd)
@@ -480,7 +480,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(cmd: T::Array[String]).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
   def systemm_default(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
@@ -490,7 +490,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(cmd: T::Array[String]).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
   def systemm_open3(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
@@ -517,7 +517,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(cmd: T::Array[String]).returns(String) }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).returns(String) }
   def backticks(cmd)
     if stdout == STDOUT && stderr == STDERR
       backticks_default(cmd)
@@ -526,7 +526,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(cmd: T::Array[String]).returns(String) }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).returns(String) }
   def backticks_default(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
@@ -536,7 +536,7 @@ class KubernetesCLI
     end
   end
 
-  sig { params(cmd: T::Array[String]).returns(String) }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).returns(String) }
   def backticks_open3(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
@@ -566,7 +566,7 @@ class KubernetesCLI
     result.string
   end
 
-  sig {
+  T::Sig::WithoutRuntime.sig {
     params(
       env: T::Hash[String, String],
       cmd: T::Array[String],
@@ -604,17 +604,17 @@ class KubernetesCLI
     end
   end
 
-  sig { params(cmd: T::Array[String]).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
   def run_before_callbacks(cmd)
     @before_execute.each { |cb| cb.call(cmd) }
   end
 
-  sig { params(cmd: T::Array[String]).void }
+  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
   def run_after_callbacks(cmd)
     @after_execute.each { |cb| cb.call(cmd, T.must(last_status)) }
   end
 
-  sig { params(status: Process::Status).void }
+  T::Sig::WithoutRuntime.sig { params(status: Process::Status).void }
   def last_status=(status)
     Thread.current[STATUS_KEY] = status
   end
