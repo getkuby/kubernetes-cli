@@ -1,3 +1,8 @@
+## 0.4.0
+* Add `#version` method to get k8s client/server version info.
+* Add Sorbet type definitions.
+* Add tests.
+
 ## 0.3.2
 * Add missing require statement.
 

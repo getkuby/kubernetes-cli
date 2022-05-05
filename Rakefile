@@ -2,9 +2,11 @@ require 'bundler'
 require 'rspec/core/rake_task'
 require 'rubygems/package_task'
 
+require 'sorbet-runtime'
 require 'kubernetes-cli'
+require 'curdle'
 
-Bundler::GemHelper.install_tasks
+Curdle::Tasks.install
 
 task default: :spec
 

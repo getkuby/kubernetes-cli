@@ -13,6 +13,8 @@ group :test do
 end
 
 group :development do
+  gem 'curdle', '~> 1.0'
+
   # lock to same version as kuby-core
   gem 'sorbet', '= 0.5.6433'
   gem 'parlour', '~> 6.0'
