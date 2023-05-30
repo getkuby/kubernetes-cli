@@ -1,3 +1,6 @@
+## 0.5.0
+* Pass environment variables to every command.
+
 ## 0.4.0
 * Add `#version` method to get k8s client/server version info.
 * Add Sorbet type definitions.

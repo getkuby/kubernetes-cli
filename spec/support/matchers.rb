@@ -2,7 +2,8 @@
 require 'rspec/expectations'
 
 class TestCommand
-  def initialize(cmd_s)
+  def initialize(env, cmd_s)
+    @env = env
     @cmd_s = cmd_s
     @cmd = cmd_s.split(' ')
   end
@@ -32,7 +33,7 @@ module CommandHelpers
     @extra = []
     @missing_redirect = false
 
-    commands.map! { |cmd_s| TestCommand.new(cmd_s) }
+    commands.map! { |env, cmd_s| TestCommand.new(env, cmd_s) }
 
     @matching_commands = commands.select do |cmd|
       missing_for_cmd = []

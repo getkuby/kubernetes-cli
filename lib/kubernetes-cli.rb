@@ -440,12 +440,12 @@ class KubernetesCLI
     Thread.current[STDERR_KEY] = new_stderr
   end
 
-  private
-
   T::Sig::WithoutRuntime.sig { returns(T::Hash[String, String]) }
   def env
     @env ||= {}
   end
+
+  private
 
   T::Sig::WithoutRuntime.sig { returns(T::Array[String]) }
   def base_cmd
@@ -456,7 +456,7 @@ class KubernetesCLI
   def execc(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
-    exec(cmd_s)
+    exec(T.unsafe(env), cmd_s)
   end
 
   T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).void }
@@ -472,7 +472,7 @@ class KubernetesCLI
   def systemm_default(cmd)
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
-    system(cmd_s).tap do
+    system(T.unsafe(env), cmd_s).tap do
       self.last_status = $?
       run_after_callbacks(cmd)
     end
@@ -483,7 +483,7 @@ class KubernetesCLI
     run_before_callbacks(cmd)
     cmd_s = cmd.join(' ')
 
-    Open3.popen3(cmd_s) do |p_stdin, p_stdout, p_stderr, wait_thread|
+    Open3.popen3(T.unsafe(env), cmd_s) do |p_stdin, p_stdout, p_stderr, wait_thread|
       Thread.new(stdout) do |t_stdout|
         begin
           p_stdout.each { |line| t_stdout.puts(line) }
@@ -507,21 +507,7 @@ class KubernetesCLI
 
   T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).returns(String) }
   def backticks(cmd)
-    if stdout == STDOUT && stderr == STDERR
-      backticks_default(cmd)
-    else
-      backticks_open3(cmd)
-    end
-  end
-
-  T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).returns(String) }
-  def backticks_default(cmd)
-    run_before_callbacks(cmd)
-    cmd_s = cmd.join(' ')
-    `#{cmd_s}`.tap do
-      self.last_status = $?
-      run_after_callbacks(cmd)
-    end
+    backticks_open3(cmd)
   end
 
   T::Sig::WithoutRuntime.sig { params(cmd: T::Array[String]).returns(String) }
@@ -530,7 +516,7 @@ class KubernetesCLI
     cmd_s = cmd.join(' ')
     result = StringIO.new
 
-    Open3.popen3(cmd_s) do |p_stdin, p_stdout, p_stderr, wait_thread|
+    Open3.popen3(T.unsafe(env), cmd_s) do |p_stdin, p_stdout, p_stderr, wait_thread|
       Thread.new do
         begin
           p_stdout.each { |line| result.puts(line) }

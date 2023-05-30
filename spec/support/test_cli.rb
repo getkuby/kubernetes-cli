@@ -17,21 +17,15 @@ class FakeStatus
 end
 
 class TestCLI < KubernetesCLI
-  attr_reader :exec_commands, :system_commands
+  attr_reader :exec_commands
 
   def initialize(kubeconfig_path, executable = KubectlRb.executable)
     @exec_commands = []
-    @system_commands = []
 
     super
   end
 
-  def on_exec(&block)
-    @exec_callback = block
-  end
-
-  def exec(cmd)
-    @exec_commands << cmd
-    @exec_callback.call(cmd) if @exec_callback
+  def exec(env, cmd)
+    @exec_commands << [env, cmd]
   end
 end
