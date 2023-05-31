@@ -193,9 +193,6 @@ class KubernetesCLI
   def backticks(cmd); end
 
   sig { params(cmd: T::Array[String]).returns(String) }
-  def backticks_default(cmd); end
-
-  sig { params(cmd: T::Array[String]).returns(String) }
   def backticks_open3(cmd); end
 
   sig do

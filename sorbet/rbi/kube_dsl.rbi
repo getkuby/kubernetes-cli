@@ -21,11 +21,11 @@ module KubeDSL
     module Meta
       module V1
         class ObjectMeta
-          sig { returns(String) }
-          def name; end
+          sig { params(args: String).returns(String) }
+          def name(*args); end
 
-          sig { returns(String) }
-          def namespace; end
+          sig { params(args: String).returns(String) }
+          def namespace(*args); end
         end
       end
     end
