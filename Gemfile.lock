@@ -18,9 +18,11 @@ GEM
     dry-inflector (0.3.0)
     highline (2.0.3)
     kind-rb (0.1.0-x86_64-darwin)
+    kind-rb (0.1.0-x86_64-linux)
     kube-dsl (0.7.5)
       dry-inflector (~> 0.2)
     kubectl-rb (0.2.1-x86_64-darwin)
+    kubectl-rb (0.2.1-x86_64-linux)
     method_source (1.0.0)
     netrc (0.11.0)
     parallel (1.23.0)
@@ -61,6 +63,7 @@ GEM
       sorbet-static (= 0.5.10851)
     sorbet-runtime (0.5.10851)
     sorbet-static (0.5.10851-universal-darwin-20)
+    sorbet-static (0.5.10851-x86_64-linux)
     sorbet-static-and-runtime (0.5.10851)
       sorbet (= 0.5.10851)
       sorbet-runtime (= 0.5.10851)
@@ -88,6 +91,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   curdle (~> 1.0)
