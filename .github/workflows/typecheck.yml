@@ -16,7 +16,5 @@ jobs:
         with:
           ruby-version: 3.1
           bundler-cache: true
-      - name: Generate RBIs
-        run: rm -r sorbet/rbi/gems && bundle exec tapioca gem
       - name: Run Sorbet
         run: bundle exec srb tc
