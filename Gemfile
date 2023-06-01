@@ -17,7 +17,7 @@ group :development do
 
   # lock to same version as kuby-core
   gem 'sorbet', '= 0.5.10851'
-  gem 'parlour', '~> 6.0'
+  gem 'parlour', '~> 7.0'
   gem 'tapioca', '~> 0.11'
 end
 

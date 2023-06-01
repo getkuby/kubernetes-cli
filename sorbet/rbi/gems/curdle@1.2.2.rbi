@@ -93,7 +93,7 @@ module Curdle::Tasks
 
     private
 
-    # source://curdle//lib/curdle/tasks.rb#41
+    # source://curdle//lib/curdle/tasks.rb#44
     def find_gemspec; end
   end
 end

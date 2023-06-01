@@ -152,14 +152,8 @@ class Byebug::PryProcessor < ::Byebug::CommandProcessor
   # inmediately after with the context's `stop_reason == :breakpoint`, so we
   # must not resume the pry instance here
   #
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#88
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#80
   def at_breakpoint(breakpoint); end
-
-  # Called when the debugger wants to stop right before the end of a class
-  # definition
-  #
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#79
-  def at_end; end
 
   # Called when the debugger wants to stop at a regular line
   #
@@ -201,33 +195,33 @@ class Byebug::PryProcessor < ::Byebug::CommandProcessor
 
   private
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#101
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#93
   def n_hits(breakpoint); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#122
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#114
   def perform_backtrace(_options); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#150
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#142
   def perform_down(options); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#138
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#130
   def perform_finish(*_arg0); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#158
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#150
   def perform_frame(options); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#128
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#120
   def perform_next(options); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#133
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#125
   def perform_step(options); end
 
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#142
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#134
   def perform_up(options); end
 
   # Resume an existing Pry REPL at the paused point.
   #
-  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#110
+  # source://pry-byebug//lib/byebug/processors/pry_processor.rb#102
   def resume_pry; end
 
   class << self
@@ -242,22 +236,22 @@ class Byebug::ThreadsTable; end
 class Pry
   extend ::Forwardable
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#81
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#81
   def initialize(options = T.unsafe(nil)); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#212
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#212
   def add_sticky_local(name, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#35
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#35
   def backtrace; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#35
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#35
   def backtrace=(_arg0); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#32
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#32
   def binding_stack; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#32
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#32
   def binding_stack=(_arg0); end
 
   # source://forwardable/1.3.2/forwardable.rb#229
@@ -272,22 +266,22 @@ class Pry
   # source://forwardable/1.3.2/forwardable.rb#229
   def commands=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#145
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#145
   def complete(str); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#50
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#50
   def config; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#124
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#124
   def current_binding; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#124
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#124
   def current_context; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#33
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#33
   def custom_completions; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#33
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#33
   def custom_completions=(_arg0); end
 
   # source://forwardable/1.3.2/forwardable.rb#229
@@ -296,16 +290,16 @@ class Pry
   # source://forwardable/1.3.2/forwardable.rb#229
   def editor=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#255
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#255
   def eval(line, options = T.unsafe(nil)); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#34
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#34
   def eval_string; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#34
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#34
   def eval_string=(_arg0); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#286
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#286
   def evaluate_ruby(code); end
 
   # source://forwardable/1.3.2/forwardable.rb#229
@@ -314,10 +308,10 @@ class Pry
   # source://forwardable/1.3.2/forwardable.rb#229
   def exception_handler=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#394
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#394
   def exec_hook(name, *args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#42
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#42
   def exit_value; end
 
   # source://forwardable/1.3.2/forwardable.rb#229
@@ -332,10 +326,10 @@ class Pry
   # source://forwardable/1.3.2/forwardable.rb#229
   def hooks=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#173
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#173
   def inject_local(name, value, binding); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#201
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#201
   def inject_sticky_locals!; end
 
   # source://forwardable/1.3.2/forwardable.rb#229
@@ -344,58 +338,58 @@ class Pry
   # source://forwardable/1.3.2/forwardable.rb#229
   def input=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#45
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#45
   def input_ring; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#39
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#39
   def last_dir; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#39
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#39
   def last_dir=(_arg0); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#41
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#41
   def last_exception; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#418
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#418
   def last_exception=(exception); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#38
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#38
   def last_file; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#38
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#38
   def last_file=(_arg0); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#37
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#37
   def last_result; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#37
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#37
   def last_result=(_arg0); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#440
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#440
   def last_result_is_exception?; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#190
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#190
   def memory_size; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#195
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#195
   def memory_size=(size); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#538
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#538
   def output; end
 
   # source://forwardable/1.3.2/forwardable.rb#229
   def output=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#48
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#48
   def output_ring; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#530
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#530
   def pager; end
 
   # source://forwardable/1.3.2/forwardable.rb#229
   def pager=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#522
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#522
   def pop_prompt; end
 
   # source://forwardable/1.3.2/forwardable.rb#229
@@ -404,106 +398,106 @@ class Pry
   # source://forwardable/1.3.2/forwardable.rb#229
   def print=(*args, &block); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#325
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#325
   def process_command(val); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#360
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#360
   def process_command_safely(val); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#101
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#101
   def prompt; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#108
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#108
   def prompt=(new_prompt); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#131
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#131
   def push_binding(object); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#118
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#118
   def push_initial_binding(target = T.unsafe(nil)); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#506
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#506
   def push_prompt(new_prompt); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#592
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#592
   def quiet?; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#582
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#582
   def raise_up(*args); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#586
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#586
   def raise_up!(*args); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#554
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#554
   def raise_up_common(force, *args); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#282
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#282
   def repl(target = T.unsafe(nil)); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#231
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#231
   def reset_eval_string; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#375
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#375
   def run_command(val); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#453
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#453
   def select_prompt; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#409
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#409
   def set_last_result(result, code = T.unsafe(nil)); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#447
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#447
   def should_print?; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#298
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#298
   def show_result(result); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#216
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#216
   def sticky_locals; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#36
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#36
   def suppress_output; end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#36
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#36
   def suppress_output=(_arg0); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#428
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#428
   def update_input_history(code); end
 
   private
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#680
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#680
   def ensure_correct_encoding!(val); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#688
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#688
   def generate_prompt(prompt_proc, conf); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#598
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#598
   def handle_line(line, options); end
 
-  # source://pry/0.13.1/lib/pry/pry_instance.rb#697
+  # source://pry/0.14.2/lib/pry/pry_instance.rb#697
   def prompt_stack; end
 
   class << self
-    # source://pry/0.13.1/lib/pry/code.rb#12
+    # source://pry/0.14.2/lib/pry/code.rb#12
     def Code(obj); end
 
-    # source://pry/0.13.1/lib/pry/method.rb#9
+    # source://pry/0.14.2/lib/pry/method.rb#9
     def Method(obj); end
 
-    # source://pry/0.13.1/lib/pry/wrapped_module.rb#7
+    # source://pry/0.14.2/lib/pry/wrapped_module.rb#7
     def WrappedModule(obj); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#291
+    # source://pry/0.14.2/lib/pry/pry_class.rb#294
     def auto_resize!; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#346
+    # source://pry/0.14.2/lib/pry/pry_class.rb#347
     def binding_for(target); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#22
+    # source://pry/0.14.2/lib/pry/pry_class.rb#22
     def cli; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#22
+    # source://pry/0.14.2/lib/pry/pry_class.rb#22
     def cli=(_arg0); end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -518,31 +512,31 @@ class Pry
     # source://forwardable/1.3.2/forwardable.rb#229
     def commands=(*args, &block); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#25
+    # source://pry/0.14.2/lib/pry/pry_class.rb#25
     def config; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#25
+    # source://pry/0.14.2/lib/pry/pry_class.rb#25
     def config=(_arg0); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#48
+    # source://pry/0.14.2/lib/pry/pry_class.rb#46
     def configure; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#379
+    # source://pry/0.14.2/lib/pry/pry_class.rb#380
     def critical_section; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#65
+    # source://pry/0.14.2/lib/pry/pry_class.rb#63
     def current; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#19
+    # source://pry/0.14.2/lib/pry/pry_class.rb#19
     def current_line; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#19
+    # source://pry/0.14.2/lib/pry/pry_class.rb#19
     def current_line=(_arg0); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#18
+    # source://pry/0.14.2/lib/pry/pry_class.rb#18
     def custom_completions; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#18
+    # source://pry/0.14.2/lib/pry/pry_class.rb#18
     def custom_completions=(_arg0); end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -551,10 +545,10 @@ class Pry
     # source://forwardable/1.3.2/forwardable.rb#229
     def editor=(*args, &block); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#21
+    # source://pry/0.14.2/lib/pry/pry_class.rb#21
     def eval_path; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#21
+    # source://pry/0.14.2/lib/pry/pry_class.rb#21
     def eval_path=(_arg0); end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -569,7 +563,7 @@ class Pry
     # source://forwardable/1.3.2/forwardable.rb#229
     def extra_sticky_locals=(*args, &block); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#141
+    # source://pry/0.14.2/lib/pry/pry_class.rb#139
     def final_session_setup; end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -584,16 +578,16 @@ class Pry
     # source://forwardable/1.3.2/forwardable.rb#229
     def hooks=(*args, &block); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#374
+    # source://pry/0.14.2/lib/pry/pry_class.rb#375
     def in_critical_section?; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#335
+    # source://pry/0.14.2/lib/pry/pry_class.rb#338
     def init; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#254
+    # source://pry/0.14.2/lib/pry/pry_class.rb#257
     def initial_session?; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#131
+    # source://pry/0.14.2/lib/pry/pry_class.rb#129
     def initial_session_setup; end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -602,46 +596,40 @@ class Pry
     # source://forwardable/1.3.2/forwardable.rb#229
     def input=(*args, &block); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#24
+    # source://pry/0.14.2/lib/pry/pry_class.rb#24
     def last_internal_error; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#24
+    # source://pry/0.14.2/lib/pry/pry_class.rb#24
     def last_internal_error=(_arg0); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#20
+    # source://pry/0.14.2/lib/pry/pry_class.rb#20
     def line_buffer; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#20
+    # source://pry/0.14.2/lib/pry/pry_class.rb#20
     def line_buffer=(_arg0); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#71
+    # source://pry/0.14.2/lib/pry/pry_class.rb#69
     def load_file_at_toplevel(file); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#199
+    # source://pry/0.14.2/lib/pry/pry_class.rb#202
     def load_file_through_repl(file_name); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#248
+    # source://pry/0.14.2/lib/pry/pry_class.rb#251
     def load_history; end
 
-    # source://forwardable/1.3.2/forwardable.rb#229
-    def load_plugins(*args, &block); end
-
-    # source://pry/0.13.1/lib/pry/pry_class.rb#79
+    # source://pry/0.14.2/lib/pry/pry_class.rb#77
     def load_rc_files; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#103
+    # source://pry/0.14.2/lib/pry/pry_class.rb#101
     def load_requires; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#111
+    # source://pry/0.14.2/lib/pry/pry_class.rb#109
     def load_traps; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#115
+    # source://pry/0.14.2/lib/pry/pry_class.rb#113
     def load_win32console; end
 
-    # source://forwardable/1.3.2/forwardable.rb#229
-    def locate_plugins(*args, &block); end
-
-    # source://pry/0.13.1/lib/pry/pry_class.rb#57
+    # source://pry/0.14.2/lib/pry/pry_class.rb#55
     def main; end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -663,9 +651,6 @@ class Pry
     def pager=(*args, &block); end
 
     # source://forwardable/1.3.2/forwardable.rb#229
-    def plugins(*args, &block); end
-
-    # source://forwardable/1.3.2/forwardable.rb#229
     def print(*args, &block); end
 
     # source://forwardable/1.3.2/forwardable.rb#229
@@ -677,41 +662,40 @@ class Pry
     # source://forwardable/1.3.2/forwardable.rb#229
     def prompt=(*args, &block); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#23
+    # source://pry/0.14.2/lib/pry/pry_class.rb#23
     def quiet; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#23
+    # source://pry/0.14.2/lib/pry/pry_class.rb#23
     def quiet=(_arg0); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#88
+    # source://pry/0.14.2/lib/pry/pry_class.rb#86
     def rc_files_to_load; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#96
+    # source://pry/0.14.2/lib/pry/pry_class.rb#94
     def real_path_to(file); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#323
+    # source://pry/0.14.2/lib/pry/pry_class.rb#326
     def reset_defaults; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#274
+    # source://pry/0.14.2/lib/pry/pry_class.rb#277
     def run_command(command_string, options = T.unsafe(nil)); end
 
-    # source://pry-byebug//lib/pry-byebug/pry_ext.rb#8
+    # source://pry/0.14.2/lib/pry/pry_class.rb#156
     def start(target = T.unsafe(nil), options = T.unsafe(nil)); end
 
-    # source://pry-byebug//lib/pry-byebug/pry_ext.rb#8
-    def start_with_pry_byebug(target = T.unsafe(nil), options = T.unsafe(nil)); end
-
-    # source://pry/0.13.1/lib/pry/pry_class.rb#159
-    def start_without_pry_byebug(target = T.unsafe(nil), options = T.unsafe(nil)); end
-
-    # source://pry/0.13.1/lib/pry/pry_class.rb#353
+    # source://pry/0.14.2/lib/pry/pry_class.rb#354
     def toplevel_binding; end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#371
+    # source://pry/0.14.2/lib/pry/pry_class.rb#372
     def toplevel_binding=(_arg0); end
 
-    # source://pry/0.13.1/lib/pry/pry_class.rb#222
+    # source://pry/0.14.2/lib/pry/pry_class.rb#225
     def view_clip(obj, options = T.unsafe(nil)); end
+
+    private
+
+    # source://pry/0.14.2/lib/pry/pry_class.rb#388
+    def mutex_available?; end
   end
 end
 
@@ -824,6 +808,77 @@ class Pry::Byebug::Breakpoints::MethodBreakpoint < ::SimpleDelegator
 
   # source://pry-byebug//lib/pry/byebug/breakpoints.rb#39
   def to_s; end
+end
+
+class Pry::REPL
+  extend ::Forwardable
+
+  # source://pry/0.14.2/lib/pry/repl.rb#22
+  def initialize(pry, options = T.unsafe(nil)); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def input(*args, &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def output(*args, &block); end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#9
+  def pry; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#9
+  def pry=(_arg0); end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#36
+  def start; end
+
+  private
+
+  # source://pry/0.14.2/lib/pry/repl.rb#237
+  def calculate_overhang(current_prompt, original_val, indented_val); end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#205
+  def coolline_available?; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#84
+  def epilogue; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#127
+  def handle_read_errors; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#195
+  def input_readline(*args); end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#217
+  def piping?; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#47
+  def prologue; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#93
+  def read; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#169
+  def read_line(current_prompt); end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#201
+  def readline_available?; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#66
+  def repl; end
+
+  # source://pry/0.14.2/lib/pry/repl.rb#224
+  def set_readline_output; end
+
+  class << self
+    # source://pry-byebug//lib/pry-byebug/pry_ext.rb#8
+    def start(options = T.unsafe(nil)); end
+
+    # source://pry-byebug//lib/pry-byebug/pry_ext.rb#8
+    def start_with_pry_byebug(options = T.unsafe(nil)); end
+
+    # source://pry/0.14.2/lib/pry/repl.rb#14
+    def start_without_pry_byebug(options); end
+  end
 end
 
 # Main container module for Pry-Byebug functionality

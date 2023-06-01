@@ -9,64 +9,70 @@ module RSpec
   extend ::RSpec::Support::Warnings
 
   class << self
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#70
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#70
     def clear_examples; end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#85
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#85
     def configuration; end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#49
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#49
     def configuration=(_arg0); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#97
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#97
     def configure; end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#168
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#194
     def const_missing(name); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def context(*args, &example_group_block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#122
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#122
     def current_example; end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#128
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#128
     def current_example=(example); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#154
+    def current_scope; end
+
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#134
+    def current_scope=(scope); end
+
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def describe(*args, &example_group_block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def example_group(*args, &example_group_block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def fcontext(*args, &example_group_block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def fdescribe(*args, &example_group_block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#58
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#58
     def reset; end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
     def shared_context(name, *args, &block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
     def shared_examples(name, *args, &block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
     def shared_examples_for(name, *args, &block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#134
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#160
     def world; end
 
-    # source://rspec-core/3.10.1/lib/rspec/core.rb#49
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#49
     def world=(_arg0); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def xcontext(*args, &example_group_block); end
 
-    # source://rspec-core/3.10.1/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def xdescribe(*args, &example_group_block); end
   end
 end
@@ -471,7 +477,7 @@ class RSpec::Support::EncodedString
   #     vs "\x80".encode('UTF-8','ASCII-8BIT', undef: :replace, replace: '<undef>')
   #     # => '<undef>'
   #   Encoding::CompatibilityError
-  #     when Encoding.compatibile?(str1, str2) is nil
+  #     when Encoding.compatible?(str1, str2) is nil
   #     e.g. utf_16le_emoji_string.split("\n")
   #     e.g. valid_unicode_string.encode(utf8_encoding) << ascii_string
   #   Encoding::InvalidByteSequenceError:
@@ -1427,6 +1433,11 @@ module RSpec::Support::RubyFeatures
   # source://rspec-support//lib/rspec/support/ruby_features.rb#83
   def caller_locations_supported?; end
 
+  # @api private
+  #
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#132
+  def distincts_kw_args_from_positional_hash?; end
+
   # On JRuby 1.7 `--1.8` mode, `Process.respond_to?(:fork)` returns true,
   # but when you try to fork, it raises an error:
   #   NotImplementedError: fork is not available on this platform
@@ -1443,17 +1454,17 @@ module RSpec::Support::RubyFeatures
   # @api private
   # @return [Boolean]
   #
-  # source://rspec-support//lib/rspec/support/ruby_features.rb#130
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#137
   def kw_args_supported?; end
 
   # @api private
   #
-  # source://rspec-support//lib/rspec/support/ruby_features.rb#186
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#193
   def module_prepends_supported?; end
 
   # @api private
   #
-  # source://rspec-support//lib/rspec/support/ruby_features.rb#182
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#189
   def module_refinement_supported?; end
 
   # @api private
@@ -1464,13 +1475,13 @@ module RSpec::Support::RubyFeatures
   # @api private
   # @return [Boolean]
   #
-  # source://rspec-support//lib/rspec/support/ruby_features.rb#134
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#141
   def required_kw_args_supported?; end
 
   # @api private
   # @return [Boolean]
   #
-  # source://rspec-support//lib/rspec/support/ruby_features.rb#120
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#123
   def ripper_supported?; end
 
   # @api private
@@ -1482,7 +1493,7 @@ module RSpec::Support::RubyFeatures
   # @api private
   # @return [Boolean]
   #
-  # source://rspec-support//lib/rspec/support/ruby_features.rb#138
+  # source://rspec-support//lib/rspec/support/ruby_features.rb#145
   def supports_rebinding_module_methods?; end
 
   # @api private
@@ -1498,22 +1509,28 @@ module RSpec::Support::RubyFeatures
     # source://rspec-support//lib/rspec/support/ruby_features.rb#83
     def caller_locations_supported?; end
 
+    # @api private
+    # @return [Boolean]
+    #
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#132
+    def distincts_kw_args_from_positional_hash?; end
+
     # source://rspec-support//lib/rspec/support/ruby_features.rb#74
     def fork_supported?; end
 
-    # source://rspec-support//lib/rspec/support/ruby_features.rb#130
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#137
     def kw_args_supported?; end
 
     # @api private
     # @return [Boolean]
     #
-    # source://rspec-support//lib/rspec/support/ruby_features.rb#186
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#193
     def module_prepends_supported?; end
 
     # @api private
     # @return [Boolean]
     #
-    # source://rspec-support//lib/rspec/support/ruby_features.rb#182
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#189
     def module_refinement_supported?; end
 
     # @api private
@@ -1522,16 +1539,16 @@ module RSpec::Support::RubyFeatures
     # source://rspec-support//lib/rspec/support/ruby_features.rb#79
     def optional_and_splat_args_supported?; end
 
-    # source://rspec-support//lib/rspec/support/ruby_features.rb#134
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#141
     def required_kw_args_supported?; end
 
-    # source://rspec-support//lib/rspec/support/ruby_features.rb#120
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#123
     def ripper_supported?; end
 
     # source://rspec-support//lib/rspec/support/ruby_features.rb#88
     def supports_exception_cause?; end
 
-    # source://rspec-support//lib/rspec/support/ruby_features.rb#138
+    # source://rspec-support//lib/rspec/support/ruby_features.rb#145
     def supports_rebinding_module_methods?; end
 
     # source://rspec-support//lib/rspec/support/ruby_features.rb#98
@@ -1585,7 +1602,7 @@ end
 module RSpec::Support::WithKeywordsWhenNeeded
   private
 
-  # Remove this in RSpec 4 in favour of explictly passed in kwargs where
+  # Remove this in RSpec 4 in favour of explicitly passed in kwargs where
   # this is used. Works around a warning in Ruby 2.7
   #
   # source://rspec-support//lib/rspec/support/with_keywords_when_needed.rb#15
