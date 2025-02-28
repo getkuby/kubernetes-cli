@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kubernetes-cli (0.5.0)
+    kubernetes-cli (0.6.0)
       kubectl-rb (~> 0.2)
 
 GEM
