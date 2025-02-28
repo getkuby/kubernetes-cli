@@ -1,3 +1,6 @@
+## 0.6.0
+* Rescue and re-raise `JSON::ParserError`s.
+
 ## 0.5.0
 * Pass environment variables to every command.
 
