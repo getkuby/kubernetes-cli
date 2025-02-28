@@ -110,7 +110,11 @@ class KubernetesCLI
         "kubectl exited with status code #{last_status.exitstatus}"
     end
 
-    JSON.parse(result)
+    begin
+      JSON.parse(result)
+    rescue JSON::ParserError
+      raise GetVersionError, "json parsing error"
+    end
   end
 
   T::Sig::WithoutRuntime.sig { params(cmd: T.any(String, T::Array[String])).void }
@@ -214,7 +218,11 @@ class KubernetesCLI
         "in namespace #{namespace}: kubectl exited with status code #{last_status.exitstatus}"
     end
 
-    JSON.parse(result)
+    begin
+      JSON.parse(result)
+    rescue JSON::ParserError
+      raise GetResourceError, "json parsing error"
+    end
   end
 
   T::Sig::WithoutRuntime.sig {
@@ -248,7 +256,11 @@ class KubernetesCLI
         "in namespace #{namespace}: kubectl exited with status code #{last_status.exitstatus}"
     end
 
-    JSON.parse(result)['items']
+    begin
+      JSON.parse(result)['items']
+    rescue JSON::ParserError
+      raise GetResourceError, "json parsing error"
+    end
   end
 
   T::Sig::WithoutRuntime.sig {

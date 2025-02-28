@@ -16,9 +16,11 @@ group :development do
   gem 'curdle', '~> 1.0'
 
   # lock to same version as kuby-core
-  gem 'sorbet', '= 0.5.10851'
-  gem 'parlour', '~> 7.0'
-  gem 'tapioca', '~> 0.11'
+  gem 'sorbet', '= 0.5.11865'
+  gem 'parlour', '~> 9.0'
+  gem 'tapioca', '~> 0.16'
+  gem 'racc'
+  gem 'base64'
 end
 
 group :development, :test do
